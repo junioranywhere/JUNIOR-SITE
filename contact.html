@@ -1,38 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact | Junior Mugadza</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <nav class="navbar">
-    <div class="logo">JUNIOR MUGADZA</div>
-    <ul class="nav-links">
-      <li><a href="home.html">Home</a></li>
+  <nav>
+    <h2 class="logo">JUNIOR MUGADZA</h2>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="info.html">Info</a></li>
+      <li><a href="services.html">Services</a></li>
     </ul>
+    <a href="jr.jpg" download class="button">DOWNLOAD</a>
   </nav>
 
   <div class="container">
     <h1>Get in Touch</h1>
     <p>Whether you have a question, a project idea, or just want to say hi — I'm all ears.</p>
 
-    <form class="contact-form">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" rows="6" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+   <!-- modify this form HTML and place wherever you want your form -->
+<form id="my-form" action="https://formspree.io/f/mpwrylov" method="POST">
+  <label>Email:</label>
+  <input type="email" name="email" />
+  <label>Message:</label>
+  <input type="text" name="message" />
+  <button id="my-form-button">Submit</button>
+  <p id="my-form-status"></p>
+</form>
 
-    <p>Prefer email? Reach me directly at <a href="mailto:junioranywhere@gmail.com">junioranywhere@gmail.com</a></p>
-    <br>
-    <p class="OR">OR</p>
-    <p>Prefer phone-number? Reach me directly at <a href="whatsapp:+27 63 709 7746">whatsapp:+27 63 709 7746</a></p>
+<!-- Place this script at the end of the body tag -->
+<script>
+  var form = document.getElementById("my-form");
+  
+  async function handleSubmit(event) {
+    event.preventDefault();
+    var status = document.getElementById("my-form-status");
+    var data = new FormData(event.target);
+    fetch(event.target.action, {
+      method: form.method,
+      body: data,
+      headers: {
+          'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        status.innerHTML = "Thanks for your submission!";
+        form.reset()
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+          } else {
+            status.innerHTML = "Oops! There was a problem submitting your form"
+          }
+        })
+      }
+    }).catch(error => {
+      status.innerHTML = "Oops! There was a problem submitting your form"
+    });
+  }
+  form.addEventListener("submit", handleSubmit)
+</script>
+
+
   </div>
 
+  
 </body>
 </html>
+<footer style="text-align: center;">&copy;2025 JUNIOR MUGADZA.All rights reserved.</footer> <!-- modify this form HTML and place wherever you want your form -->
